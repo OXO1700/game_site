@@ -9,10 +9,10 @@ let GAME_DATA = []; // 外部JSONから読み込むため、最初は空にす�
  */
 // assets/script.js 内
 
+// assets/script.js
+
 async function fetchGameData() {
     try {
-        // './games/games.json' のようにドットを明示するか、
-        // 階層を意識した記述に変えます
         const response = await fetch('./games/games.json'); 
         if (!response.ok) throw new Error('Game list not found');
         GAME_DATA = await response.json();
@@ -123,3 +123,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
 });
+
