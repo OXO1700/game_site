@@ -12,5 +12,5 @@
         "genre": "パズル",
         "path": "games/tetris/index.html",
         "color": "#00d2ff"
-    }
-]
+    } 
+] // ← ここにカンマがあるとエラーになる場合がある
