@@ -1,0 +1,16 @@
+[
+    {
+        "id": "othello",
+        "title": "AI Othello",
+        "genre": "ボードゲーム",
+        "path": "games/othello/index.html",
+        "color": "#2d5a27"
+    },
+    {
+        "id": "tetris",
+        "title": "Neon Tetris",
+        "genre": "パズル",
+        "path": "games/tetris/index.html",
+        "color": "#00d2ff"
+    }
+]

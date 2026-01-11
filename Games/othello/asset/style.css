@@ -1,0 +1,182 @@
+/* --- オセロ専用変数（共通変数と調和） --- */
+:root {
+    --board-green: #2d5a27;
+    --cell-border: #1a3a16;
+    --black-stone: radial-gradient(circle at 30% 30%, #444, #000);
+    --white-stone: radial-gradient(circle at 30% 30%, #fff, #ccc);
+    --accent-yellow: #f1c40f;
+    --panel-bg: #1e272e;
+    --transition: 0.3s ease;
+}
+
+/* --- レイアウト調整 --- */
+body {
+    margin: 0;
+    background-color: #121212;
+    color: #ecf0f1;
+}
+
+/* メインコンテンツの余白 */
+main.container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game-layout {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+/* --- 盤面 --- */
+#board-container {
+    padding: 12px;
+    background: #2c3e50;
+    border-radius: 8px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+}
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(8, 60px);
+    grid-template-rows: repeat(8, 60px);
+    background-color: var(--cell-border);
+    gap: 2px;
+    border: 2px solid var(--cell-border);
+}
+
+.cell {
+    width: 60px;
+    height: 60px;
+    background-color: var(--board-green);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+/* 石のスタイル */
+.stone {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+}
+.stone.black { background: var(--black-stone); transform: rotateY(0deg); }
+.stone.white { background: var(--white-stone); transform: rotateY(180deg); }
+
+.last-move::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #ff4757;
+    border-radius: 50%;
+}
+
+.hint {
+    width: 14px;
+    height: 14px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+}
+
+/* --- サイドパネル --- */
+.side-panel {
+    width: 340px;
+    background: var(--panel-bg);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* ゲーム内タイトルをパネル内に収める */
+.game-internal-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--accent-yellow);
+    letter-spacing: 2px;
+    text-align: center;
+    margin: 0;
+    border-bottom: 1px solid #34495e;
+    padding-bottom: 10px;
+}
+
+.status {
+    font-size: 1.3rem;
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+    min-height: 1.5em;
+}
+
+/* 分析セクション */
+.analysis-section {
+    background: rgba(0,0,0,0.3);
+    padding: 12px;
+    border-radius: 8px;
+}
+.label-container {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #95a5a6;
+    margin-bottom: 5px;
+}
+.eval-container {
+    height: 10px;
+    background: #000;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #444;
+}
+#eval-bar { width: 50%; height: 100%; background: #fff; transition: width 0.6s ease; }
+
+/* スコア & ボタン */
+.score-board { display: flex; gap: 10px; }
+.score-box { flex: 1; text-align: center; padding: 10px; border-radius: 6px; font-weight: bold; }
+.black-score { background: #000; color: #fff; border: 1px solid #444; }
+.white-score { background: #fff; color: #000; }
+
+.main-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.btn { border: none; padding: 10px; border-radius: 6px; color: #fff; font-weight: bold; cursor: pointer; transition: 0.2s; }
+.btn:hover { filter: brightness(1.2); transform: translateY(-1px); }
+
+.btn-primary { background: #3498db; }
+.btn-danger { background: #e74c3c; }
+.btn-purple { background: #8e44ad; }
+.btn-orange { background: #f39c12; }
+
+/* 入力エリア */
+.base32-section input {
+    width: 100%;
+    background: #111;
+    border: 1px solid #34495e;
+    color: #fff;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+    #board {
+        grid-template-columns: repeat(8, 11vw);
+        grid-template-rows: repeat(8, 11vw);
+    }
+    .cell { width: 11vw; height: 11vw; }
+    .stone { width: 9vw; height: 9vw; }
+    .side-panel { width: 90vw; }
+}

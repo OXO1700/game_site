@@ -1,0 +1,165 @@
+/* --- テトリス専用変数 --- */
+:root {
+    --neon-blue: #00d2ff;
+    --neon-pink: #ff0055;
+    --panel-bg: rgba(0, 0, 0, 0.6);
+}
+
+/* --- レイアウト全体を画面にフィットさせる --- */
+body {
+    background: radial-gradient(circle, #1a1a2e 0%, #0f0f1b 100%);
+    color: #fff;
+    margin: 0;
+    /* スクロールを極力抑え、画面全体を使い切る */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main.container {
+    flex: 1; /* ヘッダー以外の残りスペースをすべて使う */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow: hidden; /* はみ出し防止 */
+}
+
+.game-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-layout {
+    display: flex;
+    gap: 20px;
+    /* 画面の高さに応じて、中身のサイズを自動調整 */
+    height: 85vh; 
+    align-items: stretch;
+}
+
+/* --- キャンバスを限界まで大きくする --- */
+#game-container {
+    height: 100%; /* 親の main-layout (85vh) に合わせる */
+    aspect-ratio: 12 / 20; /* テトリスの盤面比率を維持 */
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* アスペクト比を崩さず収める */
+    background-color: #000;
+    touch-action: none;
+}
+
+/* --- サイドパネル --- */
+.side-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 180px;
+}
+
+/* モバイル対応：画面が縦長の場合は上下に並べる */
+@media (max-width: 600px) {
+    .main-layout {
+        flex-direction: column;
+        height: auto;
+        align-items: center;
+    }
+    #game-container {
+        width: 80vw;
+        height: auto;
+        aspect-ratio: 12 / 20;
+    }
+    .side-panel {
+        width: 80vw;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .stat-box { margin-bottom: 0; flex: 1; }
+}
+
+
+.game-internal-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+    text-align: center;
+    color: var(--neon-blue);
+    text-shadow: 0 0 10px var(--neon-blue);
+}
+
+.game-internal-logo span {
+    color: var(--neon-pink);
+    text-shadow: 0 0 10px var(--neon-pink);
+}
+
+.stat-box {
+    background: var(--panel-bg);
+    padding: 15px;
+    border-left: 4px solid var(--neon-blue);
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.stat-box .label {
+    font-size: 0.75rem;
+    color: var(--neon-blue);
+    margin-bottom: 5px;
+}
+
+.stat-box .value {
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: monospace;
+}
+
+.controls-hint {
+    font-size: 0.8rem;
+    color: #888;
+    line-height: 1.8;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.btn-start {
+    background: transparent;
+    border: 2px solid var(--neon-pink);
+    color: var(--neon-pink);
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 4px;
+    text-shadow: 0 0 5px var(--neon-pink);
+    box-shadow: 0 0 10px rgba(255, 0, 85, 0.2);
+}
+
+.btn-start:hover {
+    background: var(--neon-pink);
+    color: #fff;
+    box-shadow: 0 0 20px var(--neon-pink);
+}
+
+/* モバイル対応 */
+@media (max-width: 600px) {
+    .main-layout { flex-direction: column; align-items: center; }
+    .side-panel { width: 240px; }
+}

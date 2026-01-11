@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Tetris - GameDock</title>
+    <link rel="stylesheet" href="../../assets/style.css">
+    <link rel="stylesheet" href="asset/style.css">
+</head>
+<body>
+    <header id="common-header"></header>
+
+    <main class="container">
+        <div class="game-wrapper">
+            <div class="main-layout">
+                <div id="game-container">
+                    <canvas id="tetris" width="240" height="400"></canvas>
+                </div>
+
+                <div class="side-panel">
+                    <div class="game-internal-logo">
+                        NEON<span>TETRIS</span>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="label">SCORE</div>
+                        <div id="score" class="value">0</div>
+                    </div>
+
+                    <div class="controls-hint">
+                        <p>↑ : ROTATE</p>
+                        <p>← → : MOVE</p>
+                        <p>↓ : DROP</p>
+                    </div>
+
+                    <button id="start-btn" class="btn-start">START GAME</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        async function loadCommonHeader() {
+    const headerElement = document.getElementById('common-header');
+    try {
+        const response = await fetch('../../assets/header.html');
+        if (response.ok) {
+            let html = await response.text();
+            headerElement.innerHTML = html;
+
+            // --- 追加：ヘッダーの全リンクを「トップページへの遷移」に変える ---
+            const links = headerElement.querySelectorAll('a, .logo');
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const genre = link.getAttribute('data-genre') || 'all';
+                    // トップページへジャンル情報を付けて飛ばす
+                    window.location.href = `../../index.html?genre=${encodeURIComponent(genre)}`;
+                });
+            });
+
+            // 検索バーもトップページへ飛ばすようにする
+            const searchInput = headerElement.querySelector('.search-input');
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    window.location.href = `../../index.html?search=${encodeURIComponent(searchInput.value)}`;
+                }
+            });
+        }
+    } catch (e) { console.error(e); }
+}
+loadCommonHeader();
+    </script>
+    <script src="asset/script.js"></script>
+</body>
+</html>
