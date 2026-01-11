@@ -7,12 +7,16 @@ let GAME_DATA = []; // 外部JSONから読み込むため、最初は空にす�
 /**
  * ゲームデータをJSONから取得する
  */
+// assets/script.js 内
+
 async function fetchGameData() {
     try {
-        const response = await fetch('games/games.json');
+        // './games/games.json' のようにドットを明示するか、
+        // 階層を意識した記述に変えます
+        const response = await fetch('./games/games.json'); 
         if (!response.ok) throw new Error('Game list not found');
         GAME_DATA = await response.json();
-        renderGames(GAME_DATA); // 読み込み完了後に描画
+        renderGames(GAME_DATA);
     } catch (e) {
         console.error("Failed to load games:", e);
         document.getElementById('gameGrid').innerHTML = "ゲームデータの読み込みに失敗しました。";
@@ -117,4 +121,5 @@ document.addEventListener('DOMContentLoaded', async () => {
         renderGames(filtered);
         document.querySelector('.search-input').value = searchParam;
     }
+
 });
