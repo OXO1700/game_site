@@ -11,15 +11,29 @@ let GAME_DATA = []; // 外部JSONから読み込むため、最初は空にす�
 
 // assets/script.js
 
+// assets/script.js
+
 async function fetchGameData() {
     try {
+        // './' を確実に付ける、またはパスを直接指定する
+        // GitHub Pagesの階層ズレを防ぐため、相対パスを明示します
         const response = await fetch('./games/games.json'); 
-        if (!response.ok) throw new Error('Game list not found');
+        
+        if (!response.ok) {
+            // 失敗した時、コンソールにどのURLを叩こうとしたか表示させる（デバッグ用）
+            console.error("Attempted URL:", response.url);
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         GAME_DATA = await response.json();
         renderGames(GAME_DATA);
     } catch (e) {
         console.error("Failed to load games:", e);
-        document.getElementById('gameGrid').innerHTML = "ゲームデータの読み込みに失敗しました。";
+        document.getElementById('gameGrid').innerHTML = `
+            <div style="text-align:center; color:var(--text-sub);">
+                ゲームデータの読み込みに失敗しました。<br>
+                <small>${e.message}</small>
+            </div>`;
     }
 }
 
@@ -123,4 +137,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
 });
+
 
